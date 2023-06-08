@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: susecon23-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: susecon23-app
+  template:
+    metadata:
+      labels:
+        app: susecon23-app
+    spec:
+      containers:
+        - name: susecon23-app
+          image: avaleror/susecon23-demo:latest
+          ports:
+            - containerPort: 4000
+          env:
+            - name: PHX_HOST
+              value: "127.0.0.1"
+            - name: SECRET_KEY_BASE
+              value: "togC"
+
