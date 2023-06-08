@@ -1,25 +1,30 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: susecon23-app
+  name: counter-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: susecon23-app
+      app: counter-app
   template:
     metadata:
       labels:
-        app: susecon23-app
+        app: counter-app
     spec:
       containers:
-        - name: susecon23-app
+        - name: counter-app
           image: avaleror/susecon23-demo:latest
           ports:
             - containerPort: 4000
           env:
             - name: PHX_HOST
               value: "127.0.0.1"
+              #value: $(KUBERNETES_SERVICE_HOST)
+              #value: $(COUNTER-APP_SERVICE_HOST)
             - name: SECRET_KEY_BASE
-              value: "togCc7sxvRSXpJRBAvzaflzQFUbQdm+Ir6Szoaym9Brcp+gKc90a5b9GDLUKn01M"
+              valueFrom:
+                secretKeyRef:
+                  name: counter-app-secret
+                  key: key
 
